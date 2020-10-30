@@ -1030,7 +1030,7 @@
     xcode "^3.0.0"
     xml-js "^1.6.11"
 
-"@expo/vector-icons@^10.0.2":
+"@expo/vector-icons@^10.0.0", "@expo/vector-icons@^10.0.2":
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.2.1.tgz#47fb2fa12d7ad601835babde6bd3ddea7f6fde89"
   integrity sha512-clYQZFLeU2y23n03hXg18EEsZS5c73sJJnfderztfSAqkUXkfUtv07fwuprYwbHIvgFkw6L7R6xJOCVYtS85iQ==
@@ -1259,6 +1259,14 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
 
+"@react-navigation/bottom-tabs@^5.10.1":
+  version "5.10.1"
+  resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.10.1.tgz#12acaedd2696b6c9795e1f376d9f034a2cb061a4"
+  integrity sha512-A33hcWi1pn9sTVkALWth49jZAc/OMtjeiv3z7N0DqENEDnxoDaekLXRcCUIu97V6McALj/37JNoqken3uvHVWQ==
+  dependencies:
+    color "^3.1.3"
+    react-native-iphone-x-helper "^1.3.0"
+
 "@react-navigation/core@^5.13.1":
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.13.1.tgz#0d7047cea23aa4542d23c6bce38fdd723e6bf7fa"
@@ -1468,6 +1476,11 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
+app-loading@^0.0.51:
+  version "0.0.51"
+  resolved "https://registry.yarnpkg.com/app-loading/-/app-loading-0.0.51.tgz#0151381c4ef7216a39efb33baef8cc05517ae8eb"
+  integrity sha1-AVE4HE73IWo577M7rvjMBVF66Os=
+
 argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
@@ -1581,6 +1594,13 @@ available-typed-arrays@^1.0.0, available-typed-arrays@^1.0.2:
   integrity sha512-XWX3OX8Onv97LMk/ftVyBibpGwY5a8SmuxZPzeOxqmuEqUCOM9ZE+uIaD1VNJ5QnvU2UQusvmKbuM1FR8QWGfQ==
   dependencies:
     array-filter "^1.0.0"
+
+axios@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.0.tgz#26df088803a2350dff2c27f96fef99fe49442aca"
+  integrity sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 babel-plugin-dynamic-import-node@^2.3.3:
   version "2.3.3"
@@ -2518,7 +2538,7 @@ expo-permissions@~9.3.0:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-9.3.0.tgz#b90c7e9e411d306c1c7ba2bae18d5c53c201affd"
   integrity sha512-ylSJZVvEGJVFTKsFrUL2S6gCvFt+/o8TJ3xT4WaMjHe2/2Z7R8ng6NR47Kt54t7XBIV/SZ7DIY9uRiR7TPuNYA==
 
-expo-splash-screen@^0.6.1:
+expo-splash-screen@^0.6.1, expo-splash-screen@~0.6.1:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.6.2.tgz#2be7fc28ad62549e870c69f1fe133ebe756c524f"
   integrity sha512-Rvi+aiVDztFyLh5fYJYcZxVuQNDCy6ATSTfxuch5uVQ1jA9/vjVzUKG4iZCoChaSCnMV56aFftHBWSDNWPvLFQ==
@@ -2773,6 +2793,11 @@ find-up@^4.1.0:
   dependencies:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
+
+follow-redirects@^1.10.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
+  integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
 
 fontfaceobserver@^2.1.0:
   version "2.1.0"
@@ -3557,6 +3582,11 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
+
+lodash.debounce@^4:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
@@ -4554,6 +4584,14 @@ range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
+react-debounce-input@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/react-debounce-input/-/react-debounce-input-3.2.3.tgz#9e8c69771a621c81e8fe36b45ade49a95059cd87"
+  integrity sha512-7Bfjm9sxrtgB+IsSrdXoo4CVqKg7CbWC68dNhr8q7ZmY6C0AqtR524//SenHQWT+eeSG9DmSLWNWCUFSyaaWSQ==
+  dependencies:
+    lodash.debounce "^4"
+    prop-types "^15.7.2"
+
 react-devtools-core@^4.6.0:
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.9.0.tgz#39cc4589b4c6fbcb6a18e529ce745a1af3e63ae5"
@@ -4576,6 +4614,11 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-native-debounce-input@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-debounce-input/-/react-native-debounce-input-1.0.5.tgz#481ddf8b505fabaec47e1a4cf59435b733e310ad"
+  integrity sha512-X2GUECrjre//F7ePXWy92Q6NhxaorI+rTVFeoL34ARzOcyMcoPp7mol8GmwR3O8G/PMLn1jfqJOH1ryU8vldDQ==
 
 react-native-gesture-handler@~1.7.0:
   version "1.7.0"

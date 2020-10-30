@@ -2,17 +2,19 @@ import axios from 'axios';
 import React, { createRef, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import DelayInput from 'react-native-debounce-input';
-import { CountriesContext } from '../../../DefaultContainer';
+import { CountriesContext, RatesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 import SearchResults from './SearchResults';
 
 const HomeScreen = () => {
   const { countries } = useContext(CountriesContext);
+  const { rates } = useContext(RatesContext);
 
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState('');
   const [resultFound, setResultFound] = useState(true);
+  // const [rates, setRates] = useState({});
 
   const inputRef = createRef();
 

@@ -14,7 +14,7 @@ export const RatesContext = React.createContext({
 });
 
 const DefaultContainer = (props) => {
-  const [countries, setCountries] = useState([{id: 'HRV'}]);
+  const [countries, setCountries] = useState([]);
   const [rates, setRates] = useState(null);
 
   const updateRates = async () => {
@@ -30,8 +30,33 @@ const DefaultContainer = (props) => {
     }
   };
 
-  const pinCountry = () => {};
-  const unpinCountry = () => {};
+  const pinCountry = (newCountry) => {
+    setCountries([
+      ...countries,
+      {
+        id: newCountry.alpha3Code,
+        name: newCountry.name,
+        capital: newCountry.capital,
+        population: newCountry.population,
+        currency: {
+          ...newCountry.currencies[0],
+        },
+        flag: newCountry.flag,
+        tld: newCountry.topLevelDomain[0],
+        callingCode: newCountry.callingCodes[0],
+      },
+    ]);
+  };
+
+  const unpinCountry = (id) => {
+    let newCountries = [];
+    countries.forEach((country) => {
+      if (country.id !== id) {
+        newCountries.push({ ...country });
+      }
+    });
+    setCountries(newCountries);
+  };
 
   useEffect(() => {
     updateRates();

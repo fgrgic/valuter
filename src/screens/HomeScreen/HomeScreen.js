@@ -7,6 +7,7 @@ import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 import NoPins from './NoPins';
 import SearchResults from './SearchResults';
+import PinnedCountries from './PinnedCountries';
 
 const HomeScreen = () => {
   const { countries } = useContext(CountriesContext);
@@ -62,17 +63,10 @@ const HomeScreen = () => {
         <SearchResults results={searchResults} found={resultFound} />
       ) : (
         <>
-          {!countries ? (
+          {countries.length === 0 ? (
             <NoPins />
           ) : (
-            <PoppinsText
-              style={styles.title}
-              accent
-              bold
-              fontSize={ds.fontSize[6]}
-            >
-              Pinned
-            </PoppinsText>
+            <PinnedCountries />
           )}
         </>
       )}

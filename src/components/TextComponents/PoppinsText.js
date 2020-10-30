@@ -8,6 +8,8 @@ export const PoppinsText = (props) => {
   const textColor = () => {
     if (props.white) return { color: ds.white };
     if (props.primary) return { color: ds.primary };
+    if (props.primaryLight) return { color: ds.primaryLight };
+    if (props.primaryLightest) return { color: ds.primaryLightest };
     if (props.accent) return { color: ds.accent };
     if (props.accentSecondary) return { color: ds.accentSecondary };
     if (props.secondary) return { color: ds.secondary };

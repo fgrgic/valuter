@@ -1,45 +1,77 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CountriesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
 const SearchResult = ({ result }) => {
-  const { countries } = useContext(CountriesContext);
+  const { countries, pinCountry, unpinCountry } = useContext(CountriesContext);
+  const [pinned, setPinned] = useState(false);
 
   const contains = () => {
     let found = false;
     countries.forEach((country) => {
       if (country.id === result.alpha3Code) found = true;
     });
-    return found;
+    setPinned(found);
   };
 
+  useEffect(() => {
+    contains();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <PoppinsText bold accent>
-        {result.name}
-      </PoppinsText>
-      {result.currencies[0] && (
-        <>
+    result.currencies[0] &&
+    result.currencies[0].code && (
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <>
+            <PoppinsText italic primaryLightest>
+              {result.name}
+            </PoppinsText>
+            <PoppinsText bold primary fontSize={ds.fontSize[2]}>
+              {result.currencies[0].code} ({result.currencies[0].name})
+            </PoppinsText>
+          </>
+        </View>
+        <TouchableOpacity
+          style={styles.pinButton}
+          onPress={() => {
+            if (pinned) unpinCountry(result.alpha3Code);
+            else pinCountry(result);
+            setPinned(!pinned);
+          }}
+        >
           <MaterialCommunityIcons
-            name={contains() === true ? 'pin' : 'pin-off-outline'}
-            size={20}
+            name={pinned ? 'pin' : 'pin-off-outline'}
+            size={25}
             color={ds.primary}
           />
-          <PoppinsText bold fontSize={ds.fontSize[2]}>
-            {result.currencies[0].code} ({result.currencies[0].name})
-          </PoppinsText>
-        </>
-      )}
-    </View>
+        </TouchableOpacity>
+      </View>
+    )
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingVertical: ds.padding[2],
+    width: '100%',
+  },
+  textContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  pinButton: {
+    flexGrow: 1,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

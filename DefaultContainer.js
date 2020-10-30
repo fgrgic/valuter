@@ -14,7 +14,7 @@ export const RatesContext = React.createContext({
 });
 
 const DefaultContainer = (props) => {
-  const [countries, setCountries] = useState(['HRV']);
+  const [countries, setCountries] = useState([{id: 'HRV'}]);
   const [rates, setRates] = useState(null);
 
   const updateRates = async () => {
@@ -25,17 +25,24 @@ const DefaultContainer = (props) => {
       setRates(response.data);
       storageUtils.saveRates(response.data);
     } catch (e) {
-      console.warn("Couldn't fetch new rates, using old ones instead");
+      console.log("Couldn't fetch new rates, using old ones instead");
       setRates(storageUtils.loadRates());
     }
   };
+
+  const pinCountry = () => {};
+  const unpinCountry = () => {};
 
   useEffect(() => {
     updateRates();
   }, []);
 
+  useEffect(() => {
+    storageUtils.savePinned(countries);
+  }, [countries]);
+
   return (
-    <CountriesContext.Provider value={{ countries }}>
+    <CountriesContext.Provider value={{ countries, pinCountry, unpinCountry }}>
       <RatesContext.Provider value={{ rates, updateRates }}>
         {props.children}
       </RatesContext.Provider>

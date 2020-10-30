@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -44,6 +44,7 @@ function cacheFonts(fonts) {
 async function loadResourcesAsync() {
   const fontAssets = cacheFonts([
     Feather.font,
+    MaterialCommunityIcons.font,
     { 'nunito-sans-black': require('./assets/fonts/NunitoSans-Black.ttf') },
     { 'nunito-sans-bold': require('./assets/fonts/NunitoSans-Bold.ttf') },
     { 'nunito-sans-light': require('./assets/fonts/NunitoSans-Light.ttf') },

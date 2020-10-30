@@ -5,6 +5,7 @@ import DelayInput from 'react-native-debounce-input';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
+import NoPins from './NoPins';
 import SearchResults from './SearchResults';
 
 const HomeScreen = () => {
@@ -14,7 +15,6 @@ const HomeScreen = () => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState('');
   const [resultFound, setResultFound] = useState(true);
-  // const [rates, setRates] = useState({});
 
   const inputRef = createRef();
 
@@ -45,7 +45,7 @@ const HomeScreen = () => {
   }, [search]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <DelayInput
         style={styles.searchBar}
         clearButtonMode="always"
@@ -63,9 +63,7 @@ const HomeScreen = () => {
       ) : (
         <>
           {!countries ? (
-            <PoppinsText primary bold fontSize={ds.fontSize[4]}>
-              No pinned countries. To start pinning, use search
-            </PoppinsText>
+            <NoPins />
           ) : (
             <PoppinsText
               style={styles.title}
@@ -85,9 +83,11 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
+    flexGrow: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: Platform.OS === 'android' ? statusBarHeight : 0,
+    width: '100%',
+    height: '100%',
   },
   title: {
     alignSelf: 'flex-start',
@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
     marginHorizontal: ds.margin[4],
     fontFamily: 'poppins-bold',
     fontSize: ds.fontSize[2],
+    alignSelf: 'center',
+    width: '90%',
   },
 });
 

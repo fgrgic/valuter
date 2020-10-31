@@ -4900,6 +4900,11 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
+rn-swipeable-panel@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/rn-swipeable-panel/-/rn-swipeable-panel-1.2.3.tgz#c2aac0b10bfdc00dd92eca3f5e78995761c39a04"
+  integrity sha512-pq2NDXHq0U4iqqhLsPxKdeshjSNgU6snOn/99bF4xhLA8UWZjTCDAhRo723W+YsSQY28/VMdiQv0XOtZgXQOAQ==
+
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"

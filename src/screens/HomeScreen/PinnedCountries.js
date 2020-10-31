@@ -1,9 +1,17 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { SwipeablePanel } from 'rn-swipeable-panel';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
+import PanelContent from './PanelContent';
 
 const PinnedCountries = () => {
   const width = useWindowDimensions().width;
@@ -15,7 +23,6 @@ const PinnedCountries = () => {
   const { rates } = useContext(RatesContext);
 
   const [data, setData] = useState(JSON.parse(JSON.stringify(countries)));
-  const [valueInput, setValueInput] = useState({ value: '', currency: '' });
   const [currentValues, setCurrentValues] = useState(
     data.map((v) => {
       return {
@@ -23,6 +30,29 @@ const PinnedCountries = () => {
       };
     })
   );
+
+  const [panelCountry, setPanelCountry] = useState({});
+  const [panelProps, setPanelProps] = useState({
+    fullWidth: true,
+    openLarge: false,
+    showCloseButton: false,
+    noBackgroundOpacity: true,
+    closeOnTouchOutside: true,
+    style: {
+      maxWidth: 700,
+    },
+    onClose: () => closePanel(),
+    onPressCloseButton: () => closePanel(),
+  });
+  const [isPanelActive, setIsPanelActive] = useState(false);
+
+  const openPanel = () => {
+    setIsPanelActive(true);
+  };
+
+  const closePanel = () => {
+    setIsPanelActive(false);
+  };
 
   const updateCurrencies = (currencyCode, value) => {
     let newValues = JSON.parse(JSON.stringify(currentValues));
@@ -63,10 +93,17 @@ const PinnedCountries = () => {
 
   const renderItem = (item, index) => {
     return (
-      <View key={item.id}
+      <View
+        key={item.id}
         style={[styles.item, { width: parentWidth, minHeight: childrenHeight }]}
       >
-        <View style={styles.countryInfoContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            setPanelCountry(item);
+            openPanel();
+          }}
+          style={styles.countryInfoContainer}
+        >
           <PoppinsText italic primary fontSize={ds.fontSize[0]}>
             {item.name}
           </PoppinsText>
@@ -74,7 +111,7 @@ const PinnedCountries = () => {
           <PoppinsText bold primary fontSize={ds.fontSize[3]}>
             {item.currency}
           </PoppinsText>
-        </View>
+        </TouchableOpacity>
         <View style={styles.currencyInputContainer}>
           <TextInput
             style={styles.currencyInput}
@@ -99,49 +136,31 @@ const PinnedCountries = () => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={[styles.container, { width: parentWidth }]}
-    >
-      {data.map((country, index) => {
-        return renderItem(
-          {
-            key: country.id,
-            name: country.name,
-            currency: country.currency.code,
-            value: currentValues[country.currency.code],
-          },
-          index
-        );
-      })}
-      {/* <AutoDragSortableView
-        dataSource={data.map((country) => {
-          return {
-            key: country.id,
-            name: country.name,
-            currency: country.currency.code,
-            value: currentValues[country.currency.code],
-          };
+    <>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={[styles.container, { width: parentWidth }]}
+      >
+        {data.map((country, index) => {
+          return renderItem(
+            {
+              key: country.id,
+              name: country.name,
+              currency: country.currency.code,
+              flag: country.flag,
+              tld: country.tld,
+              callingCode: country.callingCode,
+              population: country.population,
+              capital: country.capital,
+            },
+            index
+          );
         })}
-        parentWidth={parentWidth}
-        childrenWidth={childrenWidth}
-        childrenHeight={childrenHeight}
-        marginChildrenBottom={0}
-        delayLongPress={75}
-        sortable={false}
-        onDragEnd={(a, b) => swapCountries(a, b)}
-        onDataChange={(newData) => {
-          if (newData.length != data.length) {
-            setData({ newData });
-          }
-        }}
-        keyExtractor={(item, index) => item.key}
-        renderBottomView={<View style={{ height: 100 }}></View>}
-        renderItem={(item, index) => {
-          return renderItem(item, index);
-        }}
-      /> */}
-    </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
+      <SwipeablePanel {...panelProps} isActive={isPanelActive}>
+        <PanelContent country={panelCountry} />
+      </SwipeablePanel>
+    </>
   );
 };
 

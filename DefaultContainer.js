@@ -30,6 +30,15 @@ const DefaultContainer = (props) => {
     }
   };
 
+  const initializePins = async () => {
+    const storageCountries = await storageUtils.loadPinned();
+    if (storageCountries) {
+      setCountries(JSON.parse(storageCountries));
+    } else {
+      setCountries([]);
+    }
+  };
+
   const pinCountry = (newCountry) => {
     setCountries([
       ...countries,
@@ -48,6 +57,23 @@ const DefaultContainer = (props) => {
     ]);
   };
 
+  /**
+   * swaps two countries, but only in local storage
+   * Does not update the context.
+   *
+   * @param {*} index1 index of the first element
+   * @param {*} index2 index of the second element
+   */
+  const swapCountries = (index1, index2) => {
+    let newCountries = JSON.parse(JSON.stringify(countries));
+    [newCountries[index1], newCountries[index2]] = [
+      newCountries[index2],
+      newCountries[index1],
+    ];
+
+    storageUtils.savePinned(newCountries);
+  };
+
   const unpinCountry = (id) => {
     let newCountries = [];
     countries.forEach((country) => {
@@ -59,15 +85,26 @@ const DefaultContainer = (props) => {
   };
 
   useEffect(() => {
-    updateRates();
+    initializePins();
+    //updateRates();
   }, []);
 
   useEffect(() => {
-    storageUtils.savePinned(countries);
+    if (countries && countries.length >= 0) {
+      storageUtils.savePinned(countries);
+    }
   }, [countries]);
 
   return (
-    <CountriesContext.Provider value={{ countries, pinCountry, unpinCountry }}>
+    <CountriesContext.Provider
+      value={{
+        countries,
+        setCountries,
+        swapCountries,
+        pinCountry,
+        unpinCountry,
+      }}
+    >
       <RatesContext.Provider value={{ rates, updateRates }}>
         {props.children}
       </RatesContext.Provider>

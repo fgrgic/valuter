@@ -3,11 +3,10 @@ import React, { createRef, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import DelayInput from 'react-native-debounce-input';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
-import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 import NoPins from './NoPins';
-import SearchResults from './SearchResults';
 import PinnedCountries from './PinnedCountries';
+import SearchResults from './SearchResults';
 
 const HomeScreen = () => {
   const { countries } = useContext(CountriesContext);
@@ -63,7 +62,7 @@ const HomeScreen = () => {
         <SearchResults results={searchResults} found={resultFound} />
       ) : (
         <>
-          {countries.length === 0 ? (
+          {countries && countries.length === 0 ? (
             <NoPins />
           ) : (
             <PinnedCountries />

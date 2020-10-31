@@ -6,6 +6,10 @@ import * as storageUtils from './src/utils/Storage';
 export const CountriesContext = React.createContext({
   countries: null,
   setCountries: () => {},
+  swapCountries: () => {},
+  pinCountry: () => {},
+  unpinCountry: () => {},
+  isPinned: () => {},
 });
 
 export const RatesContext = React.createContext({
@@ -61,6 +65,14 @@ const DefaultContainer = (props) => {
       }
     });
     setCountries(newCountries);
+  };
+
+  const isPinned = (id) => {
+    let pinned = false;
+    countries.forEach((country) => {
+      if (country.id === id) pinned = true;
+    });
+    return pinned;
   };
 
   const pinCountry = (newCountry) => {
@@ -129,6 +141,7 @@ const DefaultContainer = (props) => {
         swapCountries,
         pinCountry,
         unpinCountry,
+        isPinned,
       }}
     >
       <RatesContext.Provider value={{ rates, updateRates }}>

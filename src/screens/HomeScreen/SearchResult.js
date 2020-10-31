@@ -7,19 +7,13 @@ import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
 const SearchResult = ({ result }) => {
-  const { countries, pinCountry, unpinCountry } = useContext(CountriesContext);
+  const { countries, pinCountry, unpinCountry, isPinned } = useContext(
+    CountriesContext
+  );
   const [pinned, setPinned] = useState(false);
 
-  const contains = () => {
-    let found = false;
-    countries.forEach((country) => {
-      if (country.id === result.alpha3Code) found = true;
-    });
-    setPinned(found);
-  };
-
   useEffect(() => {
-    contains();
+    setPinned(isPinned(result.alpha3Code));
   }, []);
 
   return (

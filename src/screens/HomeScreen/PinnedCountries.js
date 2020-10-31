@@ -16,8 +16,7 @@ import PanelContent from './PanelContent';
 const PinnedCountries = () => {
   const width = useWindowDimensions().width;
   const parentWidth = width;
-  const childrenWidth = width - 20;
-  const childrenHeight = useWindowDimensions().height * 0.15;
+  // const childrenHeight = useWindowDimensions().height * 0.15;
 
   const { countries, swapCountries } = useContext(CountriesContext);
   const { rates } = useContext(RatesContext);
@@ -36,7 +35,7 @@ const PinnedCountries = () => {
     fullWidth: true,
     openLarge: false,
     showCloseButton: false,
-    noBackgroundOpacity: true,
+    noBackgroundOpacity: false,
     closeOnTouchOutside: true,
     style: {
       maxWidth: 700,
@@ -86,8 +85,6 @@ const PinnedCountries = () => {
       [currencyCode]: parseFloat(value) ? parseFloat(value) : 0,
     };
 
-    // console.warn(newValues);
-
     setCurrentValues(newValues);
   };
 
@@ -95,7 +92,7 @@ const PinnedCountries = () => {
     return (
       <View
         key={item.id}
-        style={[styles.item, { width: parentWidth, minHeight: childrenHeight }]}
+        style={[styles.item, { width: parentWidth }]}
       >
         <TouchableOpacity
           onPress={() => {
@@ -141,10 +138,10 @@ const PinnedCountries = () => {
         style={{ flex: 1 }}
         contentContainerStyle={[styles.container, { width: parentWidth }]}
       >
-        {data.map((country, index) => {
+        {countries.map((country, index) => {
           return renderItem(
             {
-              key: country.id,
+              id: country.id,
               name: country.name,
               currency: country.currency.code,
               flag: country.flag,
@@ -158,7 +155,7 @@ const PinnedCountries = () => {
         })}
       </KeyboardAwareScrollView>
       <SwipeablePanel {...panelProps} isActive={isPanelActive}>
-        <PanelContent country={panelCountry} />
+        <PanelContent country={panelCountry} close={closePanel} />
       </SwipeablePanel>
     </>
   );
@@ -175,13 +172,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     padding: ds.padding[3],
-    backgroundColor: ds.dirtyWhite,
   },
   countryInfoContainer: {
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '40%',
+    // maxWidth: '40%',
   },
   currencyInputContainer: {
     flexGrow: 1,

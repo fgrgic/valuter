@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
 import { AutoDragSortableView } from 'react-native-drag-sort';
 import { CountriesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
@@ -28,6 +28,7 @@ const PinnedCountries = () => {
             {item.currency}
           </PoppinsText>
         </View>
+        <TextInput style={{ borderWidth: 2 }}></TextInput>
       </View>
     );
   };
@@ -69,20 +70,12 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignSelf: 'center',
     alignItems: 'center',
     padding: ds.padding[3],
     backgroundColor: ds.dirtyWhite,
   },
-  // item_icon_swipe: {
-  //   width: childrenHeight - 10,
-  //   height: childrenHeight - 10,
-  //   backgroundColor: '#fff',
-  //   marginLeft: 20,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
 });
 
 export default PinnedCountries;

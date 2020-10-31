@@ -40,6 +40,12 @@ const DefaultContainer = (props) => {
   };
 
   const pinCountry = (newCountry) => {
+    let toAdd = true;
+    countries.forEach((country) => {
+      if (country.id === newCountry.id) toAdd = false;
+    });
+    if (!toAdd) return;
+
     setCountries([
       ...countries,
       {
@@ -57,6 +63,16 @@ const DefaultContainer = (props) => {
     ]);
   };
 
+  const unpinCountry = (id) => {
+    let newCountries = [];
+    countries.forEach((country) => {
+      if (country.id !== id) {
+        newCountries.push({ ...country });
+      }
+    });
+    setCountries(newCountries);
+  };
+
   /**
    * swaps two countries, but only in local storage
    * Does not update the context.
@@ -72,16 +88,6 @@ const DefaultContainer = (props) => {
     ];
 
     storageUtils.savePinned(newCountries);
-  };
-
-  const unpinCountry = (id) => {
-    let newCountries = [];
-    countries.forEach((country) => {
-      if (country.id !== id) {
-        newCountries.push({ ...country });
-      }
-    });
-    setCountries(newCountries);
   };
 
   useEffect(() => {

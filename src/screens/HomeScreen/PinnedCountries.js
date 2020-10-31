@@ -1,12 +1,6 @@
 import React, { useContext, useState } from 'react';
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  TextInput,
-  useWindowDimensions,
-  View,
-} from 'react-native';
-import { AutoDragSortableView } from 'react-native-drag-sort';
+import { StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
@@ -69,7 +63,7 @@ const PinnedCountries = () => {
 
   const renderItem = (item, index) => {
     return (
-      <View
+      <View key={item.id}
         style={[styles.item, { width: parentWidth, minHeight: childrenHeight }]}
       >
         <View style={styles.countryInfoContainer}>
@@ -105,11 +99,22 @@ const PinnedCountries = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={[styles.container, { width: parentWidth }]}
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={[styles.container, { width: parentWidth }]}
     >
-      <AutoDragSortableView
+      {data.map((country, index) => {
+        return renderItem(
+          {
+            key: country.id,
+            name: country.name,
+            currency: country.currency.code,
+            value: currentValues[country.currency.code],
+          },
+          index
+        );
+      })}
+      {/* <AutoDragSortableView
         dataSource={data.map((country) => {
           return {
             key: country.id,
@@ -123,6 +128,7 @@ const PinnedCountries = () => {
         childrenHeight={childrenHeight}
         marginChildrenBottom={0}
         delayLongPress={75}
+        sortable={false}
         onDragEnd={(a, b) => swapCountries(a, b)}
         onDataChange={(newData) => {
           if (newData.length != data.length) {
@@ -134,8 +140,8 @@ const PinnedCountries = () => {
         renderItem={(item, index) => {
           return renderItem(item, index);
         }}
-      />
-    </KeyboardAvoidingView>
+      /> */}
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -39,9 +39,10 @@ const SearchResult = ({ result }) => {
         <TouchableOpacity
           style={styles.pinButton}
           onPress={() => {
-            if (pinned) unpinCountry(result.alpha3Code);
-            else pinCountry(result);
-            setPinned(!pinned);
+            if (pinned) {
+              unpinCountry(result.alpha3Code);
+              setPinned(false);
+            } else setPinned(pinCountry(result));
           }}
         >
           <MaterialCommunityIcons

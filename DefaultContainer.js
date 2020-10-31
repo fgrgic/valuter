@@ -53,12 +53,24 @@ const DefaultContainer = (props) => {
     }
   };
 
+  const unpinCountry = (id) => {
+    let newCountries = [];
+    countries.forEach((country) => {
+      if (country.id !== id) {
+        newCountries.push({ ...country });
+      }
+    });
+    setCountries(newCountries);
+  };
+
   const pinCountry = (newCountry) => {
     let toAdd = true;
     countries.forEach((country) => {
       if (country.id === newCountry.id) toAdd = false;
+      if (country.currency.code === newCountry.currencies[0].code)
+        toAdd = false;
     });
-    if (!toAdd) return;
+    if (!toAdd) return false;
 
     setCountries([
       ...countries,
@@ -75,16 +87,7 @@ const DefaultContainer = (props) => {
         callingCode: newCountry.callingCodes[0],
       },
     ]);
-  };
-
-  const unpinCountry = (id) => {
-    let newCountries = [];
-    countries.forEach((country) => {
-      if (country.id !== id) {
-        newCountries.push({ ...country });
-      }
-    });
-    setCountries(newCountries);
+    return true;
   };
 
   /**
@@ -102,6 +105,7 @@ const DefaultContainer = (props) => {
     ];
 
     storageUtils.savePinned(newCountries);
+    setCountries(newCountries);
   };
 
   useEffect(() => {

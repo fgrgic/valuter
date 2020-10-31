@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   countryInfoContainer: {
+    flexShrink: 1,
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',

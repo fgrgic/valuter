@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -49,10 +49,6 @@ const PinnedCountries = () => {
     setCurrentValues(newValues);
   };
 
-  useEffect(() => {
-    console.warn(currentValues);
-  }, [currentValues]);
-
   const renderItem = (item, index) => {
     return (
       <View
@@ -71,7 +67,6 @@ const PinnedCountries = () => {
           style={styles.currencyInput}
           carretHidden
           blurOnSubmit
-          clearTextOnFocus
           keyboardType="numeric"
           onChangeText={(input) => {
             updateCurrencies(item.currency, input);
@@ -134,8 +129,7 @@ const styles = StyleSheet.create({
   currencyInput: {
     borderBottomWidth: 1,
     flexGrow: 1,
-    width: '20%',
-    maxWidth: 100,
+    maxWidth: '40%',
     padding: ds.padding[3],
     fontSize: ds.fontSize[3],
     fontFamily: 'poppins-bold',

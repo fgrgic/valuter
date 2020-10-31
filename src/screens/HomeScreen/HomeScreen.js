@@ -89,11 +89,13 @@ const styles = StyleSheet.create({
     borderColor: ds.primary,
     borderBottomWidth: 1,
     paddingVertical: ds.padding[3],
-    marginHorizontal: ds.margin[4],
+    marginTop: ds.margin[2],
+    paddingHorizontal: ds.padding[4],
     fontFamily: 'poppins-bold',
     fontSize: ds.fontSize[2],
     alignSelf: 'center',
     width: '90%',
+    color: ds.primary
   },
 });
 

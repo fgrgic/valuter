@@ -25,9 +25,9 @@ const Routes = () => {
           },
         })}
         tabBarOptions={{
-          activeTintColor: ds.white,
-          activeBackgroundColor: ds.primary,
-          inactiveTintColor: ds.primary,
+          activeTintColor: ds.primary,
+          activeBackgroundColor: ds.white,
+          inactiveTintColor: ds.grey,
         }}
       >
         <>

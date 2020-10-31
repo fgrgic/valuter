@@ -54,6 +54,7 @@ async function loadResourcesAsync() {
       'nunito-sans-semibold': require('./assets/fonts/NunitoSans-SemiBold.ttf'),
     },
     { 'poppins-black': require('./assets/fonts/Poppins-Black.ttf') },
+    { 'poppins-extra-bold': require('./assets/fonts/Poppins-ExtraBold.ttf') },
     { 'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf') },
     { 'poppins-light': require('./assets/fonts/Poppins-Light.ttf') },
     { poppins: require('./assets/fonts/Poppins-Regular.ttf') },

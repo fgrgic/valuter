@@ -1,11 +1,5 @@
 import React, { useContext, useState } from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
@@ -14,16 +8,11 @@ import * as ds from '../../constants/styles';
 import PanelContent from './PanelContent';
 
 const PinnedCountries = () => {
-  const width = useWindowDimensions().width;
-  const parentWidth = width;
-  // const childrenHeight = useWindowDimensions().height * 0.15;
-
-  const { countries, swapCountries } = useContext(CountriesContext);
+  const { countries } = useContext(CountriesContext);
   const { rates } = useContext(RatesContext);
 
-  const [data, setData] = useState(JSON.parse(JSON.stringify(countries)));
   const [currentValues, setCurrentValues] = useState(
-    data.map((v) => {
+    JSON.parse(JSON.stringify(countries)).map((v) => {
       return {
         [v.currency.code]: 0,
       };
@@ -35,7 +24,7 @@ const PinnedCountries = () => {
     fullWidth: true,
     openLarge: false,
     showCloseButton: false,
-    noBackgroundOpacity: false,
+    noBackgroundOpacity: true,
     closeOnTouchOutside: true,
     style: {
       maxWidth: 700,
@@ -90,10 +79,7 @@ const PinnedCountries = () => {
 
   const renderItem = (item, index) => {
     return (
-      <View
-        key={item.id}
-        style={[styles.item, { width: parentWidth }]}
-      >
+      <View key={item.id} style={[styles.item]}>
         <TouchableOpacity
           onPress={() => {
             setPanelCountry(item);
@@ -135,8 +121,10 @@ const PinnedCountries = () => {
   return (
     <>
       <KeyboardAwareScrollView
+        keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
-        contentContainerStyle={[styles.container, { width: parentWidth }]}
+        contentContainerStyle={styles.container}
       >
         {countries.map((country, index) => {
           return renderItem(
@@ -164,6 +152,7 @@ const PinnedCountries = () => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    width: '100%',
     alignItems: 'center',
   },
   item: {
@@ -171,17 +160,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignSelf: 'center',
     alignItems: 'center',
-    padding: ds.padding[3],
+    paddingVertical: ds.padding[3],
+    width: '90%',
   },
   countryInfoContainer: {
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
-    // maxWidth: '40%',
   },
   currencyInputContainer: {
-    flexGrow: 1,
-    maxWidth: '40%',
+    width: '40%',
+    maxWidth: 200,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -189,10 +178,13 @@ const styles = StyleSheet.create({
   },
   currencyInput: {
     flexGrow: 1,
-    borderBottomWidth: 1,
+    color: ds.primary,
+    backgroundColor: ds.white,
+    borderRadius: 10,
     padding: ds.padding[3],
     fontSize: ds.fontSize[3],
-    fontFamily: 'poppins',
+    fontFamily: 'poppins-extra-bold',
+    textAlign: 'right',
   },
 });
 

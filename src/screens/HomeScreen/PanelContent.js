@@ -32,11 +32,19 @@ const PanelContent = ({ country, close }) => {
       </View>
       <View style={styles.divider}></View>
       <View style={styles.statsContainer}>
-        <Stat iconName="home" text={country.capital} />
-        <Stat iconName="user" text={numberWithCommas(country.population)} />
-        <Stat iconName="globe" text={country.tld} />
-        <Stat iconName="dollar-sign" text={country.currency} />
-        <Stat iconName="phone" text={'+' + country.callingCode} />
+        <Stat iconName="home" text={country.capital} title="Capital" />
+        <Stat
+          iconName="user"
+          text={numberWithCommas(country.population)}
+          title="Population"
+        />
+        <Stat iconName="globe" text={country.tld} title="Top Level Domain" />
+        <Stat iconName="dollar-sign" text={country.currency} title="Currency" />
+        <Stat
+          iconName="phone"
+          text={'+' + country.callingCode}
+          title="Calling Code"
+        />
       </View>
     </View>
   );

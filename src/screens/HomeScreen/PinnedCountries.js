@@ -1,7 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { AutoDragSortableView } from 'react-native-drag-sort';
-import { CountriesContext } from '../../../DefaultContainer';
+import { CountriesContext, RatesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
@@ -9,11 +15,43 @@ const PinnedCountries = () => {
   const width = useWindowDimensions().width;
   const parentWidth = width;
   const childrenWidth = width - 20;
-  const childrenHeight = 50;
+  const childrenHeight = 60;
 
   const { countries, swapCountries } = useContext(CountriesContext);
+  const { rates } = useContext(RatesContext);
 
   const [data, setData] = useState(JSON.parse(JSON.stringify(countries)));
+  const [valueInput, setValueInput] = useState({ value: '', currency: '' });
+  const [currentValues, setCurrentValues] = useState(
+    data.map((v) => {
+      return {
+        [v.currency.code]: 0,
+      };
+    })
+  );
+
+  const updateCurrencies = (currencyCode, value) => {
+    let newValues = JSON.parse(JSON.stringify(currentValues));
+    const changeIndex = newValues
+      .map((e) => Object.keys(e)[0])
+      .indexOf(currencyCode);
+    newValues[changeIndex] = { [currencyCode]: value };
+    const valueInEuros = value / rates[currencyCode];
+
+    newValues = newValues.map((newValue) => {
+      const currencyRate = rates[Object.keys(newValue)[0]];
+      const num = valueInEuros * currencyRate;
+      return { [Object.keys(newValue)[0]]: valueInEuros * currencyRate };
+    });
+
+    // console.warn(newValues);
+
+    setCurrentValues(newValues);
+  };
+
+  useEffect(() => {
+    console.warn(currentValues);
+  }, [currentValues]);
 
   const renderItem = (item, index) => {
     return (
@@ -24,23 +62,39 @@ const PinnedCountries = () => {
           <PoppinsText italic primary fontSize={ds.fontSize[0]}>
             {item.name}
           </PoppinsText>
+
           <PoppinsText bold primary fontSize={ds.fontSize[3]}>
             {item.currency}
           </PoppinsText>
         </View>
-        <TextInput style={{ borderWidth: 2 }}></TextInput>
+        <TextInput
+          style={styles.currencyInput}
+          carretHidden
+          blurOnSubmit
+          clearTextOnFocus
+          keyboardType="numeric"
+          onChangeText={(input) => {
+            updateCurrencies(item.currency, input);
+          }}
+          placeholder={JSON.stringify(currentValues[index][item.currency])}
+          value={JSON.stringify(currentValues[index][item.currency])}
+        ></TextInput>
       </View>
     );
   };
 
   return (
-    <View style={[styles.container, { width: parentWidth }]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={[styles.container, { width: parentWidth }]}
+    >
       <AutoDragSortableView
         dataSource={data.map((country) => {
           return {
             key: country.id,
             name: country.name,
             currency: country.currency.code,
+            value: currentValues[country.currency.code],
           };
         })}
         parentWidth={parentWidth}
@@ -55,11 +109,12 @@ const PinnedCountries = () => {
           }
         }}
         keyExtractor={(item, index) => item.key}
+        renderBottomView={<View style={{ height: 100 }}></View>}
         renderItem={(item, index) => {
           return renderItem(item, index);
         }}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -75,6 +130,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: ds.padding[3],
     backgroundColor: ds.dirtyWhite,
+  },
+  currencyInput: {
+    borderBottomWidth: 1,
+    flexGrow: 1,
+    width: '20%',
+    maxWidth: 100,
+    padding: ds.padding[3],
+    fontSize: ds.fontSize[3],
+    fontFamily: 'poppins-bold',
   },
 });
 

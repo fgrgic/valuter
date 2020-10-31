@@ -9,7 +9,7 @@ export const saveRates = async (rates) => {
 
 export const loadRates = async () => {
   const storageRates = await AsyncStorage.getItem(RATES);
-  return storageRates;
+  return JSON.parse(storageRates);
 };
 
 export const savePinned = async (countries) => {
@@ -20,5 +20,5 @@ export const savePinned = async (countries) => {
 
 export const loadPinned = async () => {
   const storagePinnedCountries = await AsyncStorage.getItem(PINNED_COUNTRIES);
-  return storagePinnedCountries;
+  return JSON.parse(storagePinnedCountries);
 };

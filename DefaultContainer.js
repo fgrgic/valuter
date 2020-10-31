@@ -22,10 +22,10 @@ const DefaultContainer = (props) => {
       const response = await axios.get('http://data.fixer.io/api/latest', {
         params: { access_key: FIXER_ACCESS },
       });
-      setRates(response.data);
-      storageUtils.saveRates(response.data);
+      setRates(response.data.rates);
+      storageUtils.saveRates(response.data.rates);
     } catch (e) {
-      console.log("Couldn't fetch new rates, using old ones instead");
+      console.warn("Couldn't fetch new rates, using old ones instead");
       setRates(storageUtils.loadRates());
     }
   };
@@ -33,9 +33,23 @@ const DefaultContainer = (props) => {
   const initializePins = async () => {
     const storageCountries = await storageUtils.loadPinned();
     if (storageCountries) {
-      setCountries(JSON.parse(storageCountries));
+      setCountries(storageCountries);
     } else {
       setCountries([]);
+    }
+  };
+
+  /**
+   * TESTING PURPOSES ONLY!!!
+   * TODO: REMOVE BEFORE FINAL DEPLOYMENT
+   * reason -- don't ping fixerr servers too much (only 1000 available per month)
+   */
+  const initializeRates = async () => {
+    const storageRates = await storageUtils.loadRates();
+    if (storageRates) {
+      setRates(storageRates);
+    } else {
+      updateRates();
     }
   };
 
@@ -92,7 +106,9 @@ const DefaultContainer = (props) => {
 
   useEffect(() => {
     initializePins();
-    //updateRates();
+    // updateRates();
+    initializeRates();
+    // setRates(storageUtils.loadRates());
   }, []);
 
   useEffect(() => {

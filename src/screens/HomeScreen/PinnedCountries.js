@@ -1,11 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
@@ -139,7 +133,7 @@ const PinnedCountries = () => {
   return (
     <>
       <KeyboardAwareScrollView
-        keyboardDismissMode='on-drag'
+        keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       >

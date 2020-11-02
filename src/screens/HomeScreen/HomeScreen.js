@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { createRef, useContext, useEffect, useState } from 'react';
-import { Keyboard, SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import DelayInput from 'react-native-debounce-input';
 import { CountriesContext } from '../../../DefaultContainer';
 import * as ds from '../../constants/styles';
@@ -51,7 +51,6 @@ const HomeScreen = () => {
         placeholder="Search"
         inputRef={inputRef}
         minLength={1}
-        onBlur={Keyboard.dismiss()}
         delayTimeout={200}
         onChangeText={(value) => {
           setSearch(value);

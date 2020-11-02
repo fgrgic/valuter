@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React, { createRef, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
-import DelayInput from 'react-native-debounce-input';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import { CountriesContext } from '../../../DefaultContainer';
 import * as ds from '../../constants/styles';
 import NoPins from './NoPins';
@@ -14,8 +13,9 @@ const HomeScreen = () => {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState({});
   const [resultFound, setResultFound] = useState(true);
+  const [searchBarFocus, setSearchBarFocus] = useState(false);
 
-  const inputRef = createRef();
+  const inputRef = useRef();
 
   const searchCountry = async (query) => {
     try {
@@ -48,22 +48,32 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <DelayInput
-        style={styles.searchBar}
+      <TextInput
+        style={[
+          styles.searchBar,
+          { borderBottomColor: searchBarFocus ? ds.primary : ds.primary20 },
+        ]}
         clearButtonMode="always"
         placeholder="Search"
-        placeholderTextColor={ds.primary20}
+        placeholderTextColor={searchBarFocus ? ds.primary30 : ds.primary20}
         inputRef={inputRef}
         minLength={1}
-        delayTimeout={200}
         selectTextOnFocus
+        onFocus={() => setSearchBarFocus(true)}
+        onBlur={() => setSearchBarFocus(false)}
         onChangeText={(value) => {
           setSearch(value);
         }}
         value={search}
       />
       {search && search.length > 0 ? (
-        <SearchResults results={searchResults} found={resultFound} />
+        <SearchResults
+          results={searchResults}
+          found={resultFound}
+          clearSearch={() => {
+            setSearch('');
+          }}
+        />
       ) : (
         <>
           {countries && countries.length === 0 ? (
@@ -90,7 +100,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   searchBar: {
-    borderColor: ds.primary50,
     borderBottomWidth: 1,
     paddingVertical: ds.padding[3],
     paddingHorizontal: ds.padding[0],
@@ -100,6 +109,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '90%',
     color: ds.primary,
+  },
+  searchBarFocus: {
+    borderColor: ds.accent,
+  },
+  searchBarUnfocus: {
+    borderColor: ds.primary50,
   },
 });
 

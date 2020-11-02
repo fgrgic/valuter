@@ -5,7 +5,7 @@ import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 import SearchResult from './SearchResult';
 
-const SearchResults = ({ results, found }) => {
+const SearchResults = ({ results, found, clearSearch }) => {
   return (
     <ScrollView
       keyboardDismissMode="on-drag"
@@ -16,7 +16,13 @@ const SearchResults = ({ results, found }) => {
     >
       {results ? (
         results.data.map((result) => {
-          return <SearchResult key={result.alpha3Code} result={result} />;
+          return (
+            <SearchResult
+              key={result.alpha3Code}
+              result={result}
+              clearSearch={clearSearch}
+            />
+          );
         })
       ) : found ? (
         <View style={styles.loading}>
@@ -29,7 +35,7 @@ const SearchResults = ({ results, found }) => {
           <Feather
             name="alert-circle"
             size={ds.fontSize[1]}
-            color={ds.priamryLightest}
+            color={ds.primaryLightest}
           />
           <PoppinsText
             primaryLightest

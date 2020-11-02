@@ -1,8 +1,9 @@
 export const primary = '#373F51';
 export const primary0 = '#373F5100';
 export const primary20 = '#373F5133';
-export const primary40 = '#373F514D';
-export const primary70 = '#373F5180';
+export const primary30 = '#373F514D';
+export const primary50 = '#373F5180';
+export const primary70 = '#373F5180B3';
 export const primaryLight = '#444F62';
 export const primaryLightest = '#57657B';
 
@@ -11,6 +12,7 @@ export const secondary = '#77A0A2';
 export const secondaryLight = '#90C0C1';
 
 export const accent = '#EF3054';
+export const accent20 = '#EF305433';
 export const accentSecondary = '#FF6F59';
 
 export const white = '#FFF';

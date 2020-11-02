@@ -6,7 +6,7 @@ import { CountriesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
-const SearchResult = ({ result }) => {
+const SearchResult = ({ result, clearSearch }) => {
   const { countries, pinCountry, unpinCountry, isPinned } = useContext(
     CountriesContext
   );
@@ -25,7 +25,11 @@ const SearchResult = ({ result }) => {
           if (pinned) {
             unpinCountry(result.alpha3Code);
             setPinned(false);
-          } else setPinned(pinCountry(result));
+          } else {
+            const pinSuccess = pinCountry(result);
+            setPinned(pinSuccess);
+            if (pinSuccess) clearSearch();
+          }
         }}
       >
         <View style={styles.textContainer}>

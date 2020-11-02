@@ -133,6 +133,7 @@ const PinnedCountries = () => {
   return (
     <>
       <KeyboardAwareScrollView
+        onContentSizeChange={() => scrollToEnd()}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}

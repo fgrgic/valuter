@@ -9,7 +9,7 @@ const NoPins = () => {
     <View style={styles.container}>
       <MaterialCommunityIcons
         name="pin-off"
-        size={75}
+        size={ds.fontSize[10]}
         color={ds.primary}
         style={{ paddingRight: ds.padding[4] }}
       />

@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const { countries } = useContext(CountriesContext);
 
   const [search, setSearch] = useState('');
-  const [searchResults, setSearchResults] = useState('');
+  const [searchResults, setSearchResults] = useState({});
   const [resultFound, setResultFound] = useState(true);
 
   const inputRef = createRef();
@@ -20,14 +20,14 @@ const HomeScreen = () => {
   const searchCountry = async (query) => {
     try {
       const response = await axios.get(
-        'https://restcountries.eu/rest/v2/name/' + query
+        'https://restcountries.eu/rest/v2/currency/' + query
       );
       setResultFound(true);
       setSearchResults(response);
     } catch (e) {
       try {
         const response = await axios.get(
-          'https://restcountries.eu/rest/v2/currency/' + query
+          'https://restcountries.eu/rest/v2/name/' + query
         );
         setResultFound(true);
         setSearchResults(response);
@@ -40,7 +40,10 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (search) searchCountry(search);
-    else setSearchResults('');
+    else {
+      setSearchResults('');
+      setResultFound(true);
+    }
   }, [search]);
 
   return (
@@ -49,15 +52,17 @@ const HomeScreen = () => {
         style={styles.searchBar}
         clearButtonMode="always"
         placeholder="Search"
+        placeholderTextColor={ds.primary20}
         inputRef={inputRef}
         minLength={1}
         delayTimeout={200}
+        selectTextOnFocus
         onChangeText={(value) => {
           setSearch(value);
         }}
         value={search}
       />
-      {search ? (
+      {search && search.length > 0 ? (
         <SearchResults results={searchResults} found={resultFound} />
       ) : (
         <>
@@ -85,7 +90,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   searchBar: {
-    borderColor: ds.primary,
+    borderColor: ds.primary50,
     borderBottomWidth: 1,
     paddingVertical: ds.padding[3],
     paddingHorizontal: ds.padding[0],

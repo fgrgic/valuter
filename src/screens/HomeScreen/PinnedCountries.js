@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { SwipeablePanel } from 'rn-swipeable-panel';
@@ -77,6 +77,18 @@ const PinnedCountries = () => {
     setCurrentValues(newValues);
   };
 
+  useEffect(() => {
+    setCurrentValues(
+      JSON.parse(JSON.stringify(countries)).map((v) => {
+        return {
+          [v.currency.code]: currentValues[v.currency.code]
+            ? currentValues[v.currency.code]
+            : 0,
+        };
+      })
+    );
+  }, [countries]);
+
   const renderItem = (item, index) => {
     return (
       <View key={item.id} style={[styles.item]}>
@@ -100,7 +112,7 @@ const PinnedCountries = () => {
             style={styles.currencyInput}
             carretHidden
             selectTextOnFocus
-            maxLength={7}
+            maxLength={10}
             blurOnSubmit
             keyboardType="numeric"
             onChangeText={(input) => {

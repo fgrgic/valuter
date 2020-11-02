@@ -61,7 +61,7 @@ const DefaultContainer = (props) => {
     let newCountries = [];
     countries.forEach((country) => {
       if (country.id !== id) {
-        newCountries.push({ ...country });
+        newCountries.push(JSON.parse(JSON.stringify(country)));
       }
     });
     setCountries(newCountries);

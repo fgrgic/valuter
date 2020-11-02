@@ -1,4 +1,8 @@
 export const primary = '#373F51';
+export const primary0 = '#373F5100';
+export const primary20 = '#373F5133';
+export const primary40 = '#373F514D';
+export const primary70 = '#373F5180';
 export const primaryLight = '#444F62';
 export const primaryLightest = '#57657B';
 

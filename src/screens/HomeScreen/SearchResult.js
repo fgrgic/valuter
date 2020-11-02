@@ -19,7 +19,15 @@ const SearchResult = ({ result }) => {
   return (
     result.currencies[0] &&
     result.currencies[0].code && (
-      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          if (pinned) {
+            unpinCountry(result.alpha3Code);
+            setPinned(false);
+          } else setPinned(pinCountry(result));
+        }}
+      >
         <View style={styles.textContainer}>
           <>
             <PoppinsText italic primaryLightest>
@@ -30,22 +38,14 @@ const SearchResult = ({ result }) => {
             </PoppinsText>
           </>
         </View>
-        <TouchableOpacity
-          style={styles.pinButton}
-          onPress={() => {
-            if (pinned) {
-              unpinCountry(result.alpha3Code);
-              setPinned(false);
-            } else setPinned(pinCountry(result));
-          }}
-        >
+        <View style={styles.pinSymbol}>
           <MaterialCommunityIcons
             name={pinned ? 'pin' : 'pin-off-outline'}
             size={25}
-            color={ds.primary}
+            color={pinned ? ds.primary : ds.primary40}
           />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     )
   );
 };
@@ -56,14 +56,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: ds.padding[2],
-    width: '100%',
+    width: '90%',
+    alignSelf: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: ds.primary20,
   },
   textContainer: {
     display: 'flex',
     flexDirection: 'column',
   },
-  pinButton: {
-    flexGrow: 1,
+  pinSymbol: {
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',

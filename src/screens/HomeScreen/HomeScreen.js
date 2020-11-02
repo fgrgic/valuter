@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { createRef, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Keyboard, SafeAreaView, StyleSheet } from 'react-native';
 import DelayInput from 'react-native-debounce-input';
-import { CountriesContext, RatesContext } from '../../../DefaultContainer';
+import { CountriesContext } from '../../../DefaultContainer';
 import * as ds from '../../constants/styles';
 import NoPins from './NoPins';
 import PinnedCountries from './PinnedCountries';
@@ -10,7 +10,6 @@ import SearchResults from './SearchResults';
 
 const HomeScreen = () => {
   const { countries } = useContext(CountriesContext);
-  const { rates } = useContext(RatesContext);
 
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState('');
@@ -52,6 +51,7 @@ const HomeScreen = () => {
         placeholder="Search"
         inputRef={inputRef}
         minLength={1}
+        onBlur={Keyboard.dismiss()}
         delayTimeout={200}
         onChangeText={(value) => {
           setSearch(value);

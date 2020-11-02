@@ -1,7 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
-import * as ds from '../../constants/styles';
 import SearchResult from './SearchResult';
 
 const SearchResults = ({ results, found }) => {
@@ -13,7 +12,6 @@ const SearchResults = ({ results, found }) => {
       }}
       style={styles.container}
     >
-      {/* <Text>{JSON.stringify(results)}</Text> */}
       {results ? (
         results.data.map((result) => {
           return <SearchResult key={result.alpha3Code} result={result} />;
@@ -34,10 +32,9 @@ const SearchResults = ({ results, found }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     height: '100%',
     width: '100%',
-    padding: ds.padding[4],
   },
 });
 

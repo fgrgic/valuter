@@ -1,7 +1,8 @@
-import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useContext } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { CountriesContext } from '../../../DefaultContainer';
+import Divider from '../../components/Divider';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 import { numberWithCommas } from '../../utils/Numbers';
@@ -27,10 +28,14 @@ const PanelContent = ({ country, close }) => {
             close();
           }}
         >
-          <Feather name="trash-2" size={30} color={ds.accent} />
+          <MaterialCommunityIcons
+            name="pin-off-outline"
+            size={ds.fontSize[4]}
+            color={ds.accent}
+          />
         </TouchableOpacity>
       </View>
-      <View style={styles.divider}></View>
+      <Divider width="90%" />
       <View style={styles.statsContainer}>
         <Stat iconName="home" text={country.capital} title="Capital" />
         <Stat

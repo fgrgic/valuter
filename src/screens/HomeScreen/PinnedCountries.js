@@ -1,5 +1,7 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
@@ -9,12 +11,13 @@ import {
 } from 'react-native';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
+import Divider from '../../components/Divider';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 import PanelContent from './PanelContent';
 
 const PinnedCountries = () => {
-  const { countries, setCountries } = useContext(CountriesContext);
+  const { countries, clearAllPins } = useContext(CountriesContext);
   const { rates } = useContext(RatesContext);
 
   const [currentValues, setCurrentValues] = useState(
@@ -43,6 +46,26 @@ const PinnedCountries = () => {
     onPressCloseButton: () => closePanel(),
   });
   const [isPanelActive, setIsPanelActive] = useState(false);
+
+  const clearAllAlert = () =>
+    Alert.alert(
+      'Clear all pins?',
+      '',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            clearAllPins();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
 
   const openPanel = () => {
     setIsPanelActive(true);
@@ -170,12 +193,25 @@ const PinnedCountries = () => {
             index
           );
         })}
+        <Divider color={ds.primary20} width="90%" />
         <TouchableOpacity
+          style={styles.clearAllButton}
           onPress={() => {
-            setCountries([]);
+            clearAllAlert();
           }}
         >
-          <PoppinsText>Clear all</PoppinsText>
+          <MaterialCommunityIcons
+            name="pin-off-outline"
+            size={ds.fontSize[1]}
+            color={ds.accent}
+          />
+          <PoppinsText
+            accent
+            fontSize={ds.fontSize[1]}
+            style={{ paddingLeft: ds.padding[1] }}
+          >
+            Unpin all
+          </PoppinsText>
         </TouchableOpacity>
       </ScrollView>
       <SwipeablePanel {...panelProps} isActive={isPanelActive}>
@@ -222,6 +258,14 @@ const styles = StyleSheet.create({
     fontSize: ds.fontSize[3],
     fontFamily: 'poppins-extra-bold',
     textAlign: 'right',
+  },
+  clearAllButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
+    paddingTop: ds.padding[3],
   },
 });
 

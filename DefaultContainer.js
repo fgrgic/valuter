@@ -43,6 +43,10 @@ const DefaultContainer = (props) => {
     }
   };
 
+  const clearAllPins = () => {
+    setCountries([]);
+  };
+
   /**
    * TESTING PURPOSES ONLY!!!
    * TODO: REMOVE BEFORE FINAL DEPLOYMENT
@@ -142,6 +146,7 @@ const DefaultContainer = (props) => {
         pinCountry,
         unpinCountry,
         isPinned,
+        clearAllPins,
       }}
     >
       <RatesContext.Provider value={{ rates, updateRates }}>

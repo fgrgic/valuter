@@ -5,7 +5,7 @@ import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 import SearchResult from './SearchResult';
 
-const SearchResults = ({ results, found, clearSearch }) => {
+const SearchResults = ({ results, loading, clearSearch }) => {
   return (
     <ScrollView
       keyboardDismissMode="on-drag"
@@ -24,7 +24,7 @@ const SearchResults = ({ results, found, clearSearch }) => {
             />
           );
         })
-      ) : found ? (
+      ) : loading ? (
         <View style={styles.loading}>
           <PoppinsText bold primary>
             Loading...

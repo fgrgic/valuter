@@ -34,9 +34,9 @@ const PinnedCountries = () => {
   const [panelProps, setPanelProps] = useState({
     fullWidth: true,
     openLarge: true,
-    onlySmall: false,
+    onlyLarge: true,
     showCloseButton: false,
-    noBackgroundOpacity: false,
+    noBackgroundOpacity: true,
     closeOnTouchOutside: true,
     style: {
       maxWidth: 700,

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import { CountriesContext } from '../../../DefaultContainer';
 import * as ds from '../../constants/styles';
+import useDebounce from '../../hooks/useDebounce';
 import NoPins from './NoPins';
 import PinnedCountries from './PinnedCountries';
 import SearchResults from './SearchResults';
@@ -12,39 +13,41 @@ const HomeScreen = () => {
 
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState({});
-  const [resultFound, setResultFound] = useState(true);
+  const [isSearching, setIsSearching] = useState(true);
   const [searchBarFocus, setSearchBarFocus] = useState(false);
 
   const inputRef = useRef();
+  const debouncedSearchTerm = useDebounce(search, 300);
 
   const searchCountry = async (query) => {
+    setIsSearching(true);
     try {
       const response = await axios.get(
         'https://restcountries.eu/rest/v2/currency/' + query
       );
-      setResultFound(true);
       setSearchResults(response);
     } catch (e) {
       try {
         const response = await axios.get(
           'https://restcountries.eu/rest/v2/name/' + query
         );
-        setResultFound(true);
         setSearchResults(response);
       } catch (er) {
-        setResultFound(false);
         setSearchResults('');
       }
+    } finally {
+      setIsSearching(false);
     }
   };
 
   useEffect(() => {
-    if (search) searchCountry(search);
-    else {
+    // Make sure we have a value (user has entered something in input)
+    if (debouncedSearchTerm) {
+      searchCountry(debouncedSearchTerm);
+    } else {
       setSearchResults('');
-      setResultFound(true);
     }
-  }, [search]);
+  }, [debouncedSearchTerm]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,7 +72,7 @@ const HomeScreen = () => {
       {search && search.length > 0 ? (
         <SearchResults
           results={searchResults}
-          found={resultFound}
+          loading={isSearching}
           clearSearch={() => {
             setSearch('');
           }}

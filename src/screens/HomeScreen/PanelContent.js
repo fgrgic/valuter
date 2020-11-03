@@ -29,7 +29,7 @@ const PanelContent = ({ country, close }) => {
           }}
         >
           <MaterialCommunityIcons
-            name="pin-off-outline"
+            name="pin-off"
             size={ds.fontSize[4]}
             color={ds.accent}
           />

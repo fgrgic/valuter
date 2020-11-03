@@ -21,7 +21,7 @@ const PinnedCountries = () => {
   const { rates } = useContext(RatesContext);
 
   const [currentValues, setCurrentValues] = useState(
-    JSON.parse(JSON.stringify(countries)).map((v) => {
+    JSON.parse(JSON.stringify(countries)).map((v, index) => {
       return {
         [v.currency.code]: 0,
       };
@@ -193,7 +193,11 @@ const PinnedCountries = () => {
             index
           );
         })}
-        <Divider color={ds.primary20} width="90%" />
+        <Divider
+          color={ds.primary20}
+          width="90%"
+          style={{ marginVertical: ds.margin[6] }}
+        />
         <TouchableOpacity
           style={styles.clearAllButton}
           onPress={() => {
@@ -201,7 +205,7 @@ const PinnedCountries = () => {
           }}
         >
           <MaterialCommunityIcons
-            name="pin-off-outline"
+            name="pin-off"
             size={ds.fontSize[1]}
             color={ds.accent}
           />
@@ -265,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-    paddingTop: ds.padding[3],
+    // paddingTop: ds.padding[3],
   },
 });
 

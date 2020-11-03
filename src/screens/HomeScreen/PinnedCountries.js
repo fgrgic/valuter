@@ -210,7 +210,7 @@ const PinnedCountries = () => {
           );
         })}
         <Divider
-          color={ds.primary20}
+          color={colors.primary20}
           width="90%"
           style={{ marginVertical: ds.margin[6] }}
         />

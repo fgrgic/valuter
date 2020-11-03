@@ -1,16 +1,19 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { SettingsContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
 const NoPins = () => {
+  const { colors } = useContext(SettingsContext);
+
   return (
     <View style={styles.container}>
       <MaterialCommunityIcons
         name="pin-off"
         size={ds.fontSize[10]}
-        color={ds.primary}
+        color={colors.primary}
         style={{ paddingRight: ds.padding[4] }}
       />
       <View style={styles.textContainer}>

@@ -5,6 +5,7 @@ import * as ds from '../constants/styles';
 
 const Divider = ({ height, width, color, style }) => {
   const { colors } = useContext(SettingsContext);
+
   return (
     <View
       style={[

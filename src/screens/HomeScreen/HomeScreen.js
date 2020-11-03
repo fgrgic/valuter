@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
-import { CountriesContext } from '../../../DefaultContainer';
+import { CountriesContext, SettingsContext } from '../../../DefaultContainer';
 import * as ds from '../../constants/styles';
 import useDebounce from '../../hooks/useDebounce';
 import NoPins from './NoPins';
@@ -10,6 +10,7 @@ import SearchResults from './SearchResults';
 
 const HomeScreen = () => {
   const { countries } = useContext(CountriesContext);
+  const { colors } = useContext(SettingsContext);
 
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState({});
@@ -49,43 +50,54 @@ const HomeScreen = () => {
   }, [debouncedSearchTerm]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={[
-          styles.searchBar,
-          { borderBottomColor: searchBarFocus ? ds.primary : ds.primary20 },
-        ]}
-        clearButtonMode="always"
-        placeholder="Search"
-        placeholderTextColor={searchBarFocus ? ds.primary30 : ds.primary20}
-        inputRef={inputRef}
-        minLength={1}
-        selectTextOnFocus
-        onFocus={() => setSearchBarFocus(true)}
-        onBlur={() => setSearchBarFocus(false)}
-        onChangeText={(value) => {
-          setSearch(value);
-        }}
-        value={search}
-      />
-      {search && search.length > 0 ? (
-        <SearchResults
-          results={searchResults}
-          loading={isSearching}
-          clearSearch={() => {
-            setSearch('');
+    colors && (
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: colors.almostWhite }]}
+      >
+        <TextInput
+          style={[
+            styles.searchBar,
+            {
+              borderBottomColor: searchBarFocus
+                ? colors.primary
+                : colors.primary20,
+              color: colors.primary,
+            },
+          ]}
+          clearButtonMode="always"
+          placeholder="Search"
+          placeholderTextColor={
+            searchBarFocus ? colors.primary30 : colors.primary20
+          }
+          inputRef={inputRef}
+          minLength={1}
+          selectTextOnFocus
+          onFocus={() => setSearchBarFocus(true)}
+          onBlur={() => setSearchBarFocus(false)}
+          onChangeText={(value) => {
+            setSearch(value);
           }}
+          value={search}
         />
-      ) : (
-        <>
-          {countries && countries.length === 0 ? (
-            <NoPins />
-          ) : (
-            <PinnedCountries />
-          )}
-        </>
-      )}
-    </SafeAreaView>
+        {search && search.length > 0 ? (
+          <SearchResults
+            results={searchResults}
+            loading={isSearching}
+            clearSearch={() => {
+              setSearch('');
+            }}
+          />
+        ) : (
+          <>
+            {countries && countries.length === 0 ? (
+              <NoPins />
+            ) : (
+              <PinnedCountries />
+            )}
+          </>
+        )}
+      </SafeAreaView>
+    )
   );
 };
 
@@ -97,7 +109,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: ds.almostWhite,
   },
   title: {
     alignSelf: 'flex-start',
@@ -111,7 +122,6 @@ const styles = StyleSheet.create({
     fontSize: ds.fontSize[2],
     alignSelf: 'center',
     width: '90%',
-    color: ds.primary,
   },
   searchBarFocus: {
     borderColor: ds.accent,

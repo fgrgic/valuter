@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import { PINNED_COUNTRIES, RATES } from '../constants';
+import { PINNED_COUNTRIES, RATES, SETTINGS } from '../constants';
 
 export const saveRates = async (rates) => {
   if (rates) {
@@ -21,4 +21,15 @@ export const savePinned = async (countries) => {
 export const loadPinned = async () => {
   const storagePinnedCountries = await AsyncStorage.getItem(PINNED_COUNTRIES);
   return JSON.parse(storagePinnedCountries);
+};
+
+export const saveSettings = async (settings) => {
+  if (settings) {
+    await AsyncStorage.setItem(SETTINGS, JSON.stringify(settings));
+  }
+};
+
+export const loadSettings = async () => {
+  const storageSettings = await AsyncStorage.getItem(SETTINGS);
+  return JSON.parse(storageSettings);
 };

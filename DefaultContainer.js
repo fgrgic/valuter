@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useColorScheme } from 'react-native-appearance';
+import * as colorsLight from './src/constants/colors';
+import * as colorsDark from './src/constants/colors-dark';
 import { FIXER_ACCESS } from './src/keys';
 import * as storageUtils from './src/utils/Storage';
 
 export const CountriesContext = React.createContext({
   countries: null,
   setCountries: () => {},
-  swapCountries: () => {},
   pinCountry: () => {},
   unpinCountry: () => {},
   isPinned: () => {},
@@ -15,11 +17,23 @@ export const CountriesContext = React.createContext({
 export const RatesContext = React.createContext({
   rates: null,
   setRates: () => {},
+  updateRates: () => {},
+});
+
+export const SettingsContext = React.createContext({
+  settings: null,
+  setSettings: () => {},
+  colors: null,
+  setColors: () => {},
 });
 
 const DefaultContainer = (props) => {
   const [countries, setCountries] = useState([]);
   const [rates, setRates] = useState(null);
+  const [settings, setSettings] = useState(null);
+  const [colors, setColors] = useState(null);
+
+  const colorScheme = useColorScheme();
 
   const updateRates = async () => {
     try {
@@ -106,28 +120,21 @@ const DefaultContainer = (props) => {
     return true;
   };
 
-  /**
-   * swaps two countries, but only in local storage
-   * Does not update the context.
-   *
-   * @param {*} index1 index of the first element
-   * @param {*} index2 index of the second element
-   */
-  const swapCountries = (index1, index2) => {
-    let newCountries = JSON.parse(JSON.stringify(countries));
-    [newCountries[index1], newCountries[index2]] = [
-      newCountries[index2],
-      newCountries[index1],
-    ];
-
-    storageUtils.savePinned(newCountries);
-    setCountries(newCountries);
+  const initializeSettings = async () => {
+    const storageSettings = await storageUtils.loadSettings();
+    if (storageSettings) {
+      setSettings(storageSettings);
+    } else {
+      console.warn('here');
+    }
+    setSettings({ style: colorScheme === 'dark' ? colorsDark : colors });
   };
 
   useEffect(() => {
     initializePins();
     // updateRates();
     initializeRates();
+    initializeSettings();
   }, []);
 
   useEffect(() => {
@@ -136,22 +143,34 @@ const DefaultContainer = (props) => {
     }
   }, [countries]);
 
+  useEffect(() => {
+    if (settings) {
+      storageUtils.saveSettings(settings);
+    }
+  }, [settings]);
+
+  useEffect(() => {
+    if (colorScheme === 'dark') setColors(colorsDark);
+    else setColors(colorsLight);
+  }, [colorScheme]);
+
   return (
-    <CountriesContext.Provider
-      value={{
-        countries,
-        setCountries,
-        swapCountries,
-        pinCountry,
-        unpinCountry,
-        isPinned,
-        clearAllPins,
-      }}
-    >
-      <RatesContext.Provider value={{ rates, updateRates }}>
-        {props.children}
-      </RatesContext.Provider>
-    </CountriesContext.Provider>
+    <SettingsContext.Provider value={{ settings, colors }}>
+      <CountriesContext.Provider
+        value={{
+          countries,
+          setCountries,
+          pinCountry,
+          unpinCountry,
+          isPinned,
+          clearAllPins,
+        }}
+      >
+        <RatesContext.Provider value={{ rates, updateRates }}>
+          {props.children}
+        </RatesContext.Provider>
+      </CountriesContext.Provider>
+    </SettingsContext.Provider>
   );
 };
 

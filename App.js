@@ -5,6 +5,7 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { AppearanceProvider } from 'react-native-appearance';
 import DefaultContainer from './DefaultContainer';
 import Routes from './src/Routes';
 
@@ -21,9 +22,11 @@ const App = () => {
     );
   }
   return (
-    <DefaultContainer>
-      <Routes />
-    </DefaultContainer>
+    <AppearanceProvider>
+      <DefaultContainer>
+        <Routes />
+      </DefaultContainer>
+    </AppearanceProvider>
   );
 };
 

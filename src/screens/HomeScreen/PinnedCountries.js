@@ -10,7 +10,11 @@ import {
   View,
 } from 'react-native';
 import { SwipeablePanel } from 'rn-swipeable-panel';
-import { CountriesContext, RatesContext } from '../../../DefaultContainer';
+import {
+  CountriesContext,
+  RatesContext,
+  SettingsContext,
+} from '../../../DefaultContainer';
 import Divider from '../../components/Divider';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
@@ -18,6 +22,7 @@ import PanelContent from './PanelContent';
 
 const PinnedCountries = () => {
   const { countries, clearAllPins } = useContext(CountriesContext);
+  const { colors } = useContext(SettingsContext);
   const { rates } = useContext(RatesContext);
 
   const [currentValues, setCurrentValues] = useState(
@@ -41,11 +46,19 @@ const PinnedCountries = () => {
     style: {
       maxWidth: 700,
       maxHeight: 800,
+      backgroundColor: colors.white,
     },
     onClose: () => closePanel(),
     onPressCloseButton: () => closePanel(),
   });
   const [isPanelActive, setIsPanelActive] = useState(false);
+
+  useEffect(() => {
+    setPanelProps({
+      ...panelProps,
+      style: [panelProps.style, { backgroundColor: colors.white }],
+    });
+  }, [colors]);
 
   const clearAllAlert = () =>
     Alert.alert(
@@ -142,7 +155,10 @@ const PinnedCountries = () => {
         </TouchableOpacity>
         <View style={styles.currencyInputContainer}>
           <TextInput
-            style={styles.currencyInput}
+            style={[
+              styles.currencyInput,
+              { color: colors.primary, backgroundColor: colors.white },
+            ]}
             carretHidden
             selectTextOnFocus
             maxLength={10}

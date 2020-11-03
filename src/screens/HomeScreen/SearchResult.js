@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { CountriesContext } from '../../../DefaultContainer';
+import { CountriesContext, SettingsContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
@@ -10,6 +10,7 @@ const SearchResult = ({ result, clearSearch }) => {
   const { countries, pinCountry, unpinCountry, isPinned } = useContext(
     CountriesContext
   );
+  const { colors } = useContext(SettingsContext);
   const [pinned, setPinned] = useState(false);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const SearchResult = ({ result, clearSearch }) => {
           <MaterialCommunityIcons
             name={pinned ? 'pin' : 'pin-off-outline'}
             size={25}
-            color={pinned ? ds.primary : ds.primary40}
+            color={pinned ? colors.primary : colors.primary30}
           />
         </View>
       </TouchableOpacity>

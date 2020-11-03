@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text } from 'react-native';
+import { SettingsContext } from '../../../DefaultContainer';
 import * as ds from '../../constants/styles';
 
 export const PoppinsText = (props) => {
   const { black, bold, italic, white, fontSize = ds.fontSize[0] } = props;
+  const { colors } = useContext(SettingsContext);
 
   const textColor = () => {
-    if (props.white) return { color: ds.white };
-    if (props.primary) return { color: ds.primary };
-    if (props.primaryLight) return { color: ds.primaryLight };
-    if (props.primaryLightest) return { color: ds.primaryLightest };
-    if (props.accent) return { color: ds.accent };
-    if (props.accentSecondary) return { color: ds.accentSecondary };
-    if (props.secondary) return { color: ds.secondary };
+    if (props.white) return { color: colors.white };
+    if (props.primary) return { color: colors.primary };
+    if (props.primaryLight) return { color: colors.primaryLight };
+    if (props.primaryLightest) return { color: colors.primaryLightest };
+    if (props.accent) return { color: colors.accent };
+    if (props.accentSecondary) return { color: colors.accentSecondary };
+    if (props.secondary) return { color: colors.secondary };
   };
 
   return (

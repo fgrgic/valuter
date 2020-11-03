@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useContext } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { CountriesContext } from '../../../DefaultContainer';
+import { CountriesContext, SettingsContext } from '../../../DefaultContainer';
 import Divider from '../../components/Divider';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
@@ -9,7 +9,8 @@ import { numberWithCommas } from '../../utils/Numbers';
 import Stat from './Stat';
 
 const PanelContent = ({ country, close }) => {
-  const { countries, unpinCountry } = useContext(CountriesContext);
+  const { unpinCountry } = useContext(CountriesContext);
+  const { colors } = useContext(SettingsContext);
 
   return (
     <View style={styles.container}>
@@ -31,7 +32,7 @@ const PanelContent = ({ country, close }) => {
           <MaterialCommunityIcons
             name="pin-off"
             size={ds.fontSize[4]}
-            color={ds.accent}
+            color={colors.accent}
           />
         </TouchableOpacity>
       </View>

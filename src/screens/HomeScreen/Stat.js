@@ -1,17 +1,21 @@
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { SettingsContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
 const Stat = ({ text, iconName, title }) => {
+  const { colors } = useContext(SettingsContext);
+
   return (
     <View style={styles.stat}>
-      <Feather name={iconName} size={ds.fontSize[4]} color={ds.primary} />
+      <Feather name={iconName} size={ds.fontSize[4]} color={colors.primary} />
       <View style={styles.statTextContainer}>
         {title && (
           <PoppinsText
             italic
+            primary
             fontSize={ds.fontSize[0]}
             style={styles.statTitle}
           >

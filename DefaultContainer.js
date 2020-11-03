@@ -128,7 +128,6 @@ const DefaultContainer = (props) => {
     initializePins();
     // updateRates();
     initializeRates();
-    // setRates(storageUtils.loadRates());
   }, []);
 
   useEffect(() => {

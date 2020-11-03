@@ -269,7 +269,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-    // paddingTop: ds.padding[3],
   },
 });
 

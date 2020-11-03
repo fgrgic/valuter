@@ -41,7 +41,6 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    // Make sure we have a value (user has entered something in input)
     if (debouncedSearchTerm) {
       searchCountry(debouncedSearchTerm);
     } else {
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
+    backgroundColor: ds.almostWhite,
   },
   title: {
     alignSelf: 'flex-start',

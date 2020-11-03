@@ -1,6 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SwipeablePanel } from 'rn-swipeable-panel';
 import { CountriesContext, RatesContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
@@ -8,7 +14,7 @@ import * as ds from '../../constants/styles';
 import PanelContent from './PanelContent';
 
 const PinnedCountries = () => {
-  const { countries } = useContext(CountriesContext);
+  const { countries, setCountries } = useContext(CountriesContext);
   const { rates } = useContext(RatesContext);
 
   const [currentValues, setCurrentValues] = useState(
@@ -19,15 +25,19 @@ const PinnedCountries = () => {
     })
   );
 
+  const countriesScroll = useRef(null);
+
   const [panelCountry, setPanelCountry] = useState({});
   const [panelProps, setPanelProps] = useState({
     fullWidth: true,
-    openLarge: false,
+    openLarge: true,
+    onlySmall: false,
     showCloseButton: false,
-    noBackgroundOpacity: true,
+    noBackgroundOpacity: false,
     closeOnTouchOutside: true,
     style: {
       maxWidth: 700,
+      maxHeight: 800,
     },
     onClose: () => closePanel(),
     onPressCloseButton: () => closePanel(),
@@ -131,9 +141,16 @@ const PinnedCountries = () => {
   };
 
   return (
-    <>
-      <KeyboardAwareScrollView
-        onContentSizeChange={() => scrollToEnd()}
+    <KeyboardAvoidingView
+      style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
+      behavior="padding"
+      enabled
+    >
+      <ScrollView
+        ref={countriesScroll}
+        onContentSizeChange={() => {
+          countriesScroll.current.scrollToEnd({ animated: true });
+        }}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
@@ -153,11 +170,18 @@ const PinnedCountries = () => {
             index
           );
         })}
-      </KeyboardAwareScrollView>
+        <TouchableOpacity
+          onPress={() => {
+            setCountries([]);
+          }}
+        >
+          <PoppinsText>Clear all</PoppinsText>
+        </TouchableOpacity>
+      </ScrollView>
       <SwipeablePanel {...panelProps} isActive={isPanelActive}>
         <PanelContent country={panelCountry} close={closePanel} />
       </SwipeablePanel>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

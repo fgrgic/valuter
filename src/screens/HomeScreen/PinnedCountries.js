@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -45,7 +46,7 @@ const PinnedCountries = () => {
     closeOnTouchOutside: true,
     style: {
       maxWidth: 700,
-      maxHeight: 800,
+      maxHeight: '90%',
       backgroundColor: colors.white,
     },
     onClose: () => closePanel(),
@@ -159,6 +160,7 @@ const PinnedCountries = () => {
               styles.currencyInput,
               { color: colors.primary, backgroundColor: colors.white },
             ]}
+            includeFontPadding={false}
             carretHidden
             selectTextOnFocus
             maxLength={10}
@@ -182,14 +184,22 @@ const PinnedCountries = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-      behavior="padding"
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        flexGrow: 1,
+        // height: '100%',
+      }}
+      behavior={Platform.OS === 'android' ? 'height' : 'padding'}
       enabled
     >
       <ScrollView
         ref={countriesScroll}
         onContentSizeChange={() => {
-          countriesScroll.current.scrollToEnd({ animated: true });
+          if (Platform.OS === 'ios') {
+            countriesScroll.current.scrollToEnd({ animated: true });
+          }
         }}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}

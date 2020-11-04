@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useColorScheme } from 'react-native-appearance';
 import { SettingsContext } from '../../../DefaultContainer';
+import Divider from '../../components/Divider';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import { AMOLED, DARK, DEFAULT, LIGHT } from '../../constants';
 import * as ds from '../../constants/styles';
@@ -13,7 +14,11 @@ const AboutScreen = () => {
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.almostWhite }]}
+      style={[
+        { paddingTop: ds.padding[6] },
+        styles.container,
+        { backgroundColor: colors.almostWhite },
+      ]}
     >
       <View style={styles.screenTitle}>
         <PoppinsText primary bold fontSize={ds.fontSize[4]}>
@@ -21,10 +26,11 @@ const AboutScreen = () => {
         </PoppinsText>
       </View>
       <View style={styles.settingTitle}>
-        <PoppinsText primary italic fontSize={ds.fontSize[2]}>
+        <PoppinsText primary italic fontSize={ds.fontSize[3]}>
           Color Scheme
         </PoppinsText>
       </View>
+      <Divider width="90%" color={colors.primary20} />
       <View style={styles.optionsContainer}>
         {[
           { scheme: LIGHT, displayColor: ds.white, name: 'Light' },
@@ -70,7 +76,8 @@ const styles = StyleSheet.create({
   },
   settingTitle: {
     width: '90%',
-    paddingBottom: ds.padding[3],
+    paddingBottom: ds.padding[1],
+    paddingTop: ds.padding[2],
   },
   optionsContainer: {
     display: 'flex',

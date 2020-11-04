@@ -31,9 +31,9 @@ const Routes = () => {
           })}
           tabBarOptions={{
             activeTintColor: colors.primary,
-            activeBackgroundColor: colors.almostWhite,
+            activeBackgroundColor: colors.white,
             inactiveTintColor: colors.primary30,
-            inactiveBackgroundColor: colors.white,
+            inactiveBackgroundColor: colors.almostWhite,
           }}
         >
           <>

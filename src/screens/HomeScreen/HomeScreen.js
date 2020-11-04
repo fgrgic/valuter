@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { SafeAreaView, StyleSheet, TextInput } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet, TextInput } from 'react-native';
 import { CountriesContext, SettingsContext } from '../../../DefaultContainer';
 import * as ds from '../../constants/styles';
 import useDebounce from '../../hooks/useDebounce';
@@ -52,7 +52,11 @@ const HomeScreen = () => {
   return (
     colors && (
       <SafeAreaView
-        style={[styles.container, { backgroundColor: colors.almostWhite }]}
+        style={[
+          { paddingTop: Platform.OS === 'android' ? ds.padding[6] : 0 },
+          styles.container,
+          { backgroundColor: colors.almostWhite },
+        ]}
       >
         <TextInput
           style={[

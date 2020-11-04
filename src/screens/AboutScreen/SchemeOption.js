@@ -6,7 +6,7 @@ import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import * as ds from '../../constants/styles';
 
 const SchemeOption = ({ selected, name, color, scheme }) => {
-  const { updateScheme } = useContext(SettingsContext);
+  const { updateScheme, colors } = useContext(SettingsContext);
   return (
     <TouchableOpacity
       style={styles.container}
@@ -19,11 +19,14 @@ const SchemeOption = ({ selected, name, color, scheme }) => {
             {
               backgroundColor: color,
               borderWidth: 2,
-              borderColor: selected ? ds.accent : 'transparent',
+              borderColor: selected ? colors.accent : colors.grey,
             },
           ]}
         />
-        <PoppinsText primary fontSize={ds.fontSize[1]}>
+        <PoppinsText
+          style={{ color: selected ? colors.accent : colors.primary }}
+          fontSize={ds.fontSize[2]}
+        >
           {name}
         </PoppinsText>
       </View>

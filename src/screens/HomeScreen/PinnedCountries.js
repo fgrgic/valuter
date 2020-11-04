@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     alignItems: 'center',
-    paddingBottom: ds.padding[6],
+    paddingVertical: ds.padding[6],
   },
   item: {
     flexDirection: 'row',

@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native-appearance';
+import { AMOLED, DARK, DEFAULT, LIGHT } from './src/constants';
 import * as colorsLight from './src/constants/colors';
+import * as colorsAmoled from './src/constants/colors-amoled';
 import * as colorsDark from './src/constants/colors-dark';
 import { FIXER_ACCESS } from './src/keys';
 import * as storageUtils from './src/utils/Storage';
@@ -43,7 +45,7 @@ const DefaultContainer = (props) => {
       setRates(response.data.rates);
       storageUtils.saveRates(response.data.rates);
     } catch (e) {
-      console.warn("Couldn't fetch new rates, using old ones instead");
+      console.log("Couldn't fetch new rates, using old ones instead");
       setRates(storageUtils.loadRates());
     }
   };
@@ -125,9 +127,12 @@ const DefaultContainer = (props) => {
     if (storageSettings) {
       setSettings(storageSettings);
     } else {
-      console.warn('here');
+      setSettings({ scheme: DEFAULT });
     }
-    setSettings({ style: colorScheme === 'dark' ? colorsDark : colors });
+  };
+
+  const updateScheme = (scheme) => {
+    setSettings({ ...settings, scheme });
   };
 
   useEffect(() => {
@@ -144,18 +149,36 @@ const DefaultContainer = (props) => {
   }, [countries]);
 
   useEffect(() => {
-    if (settings) {
-      storageUtils.saveSettings(settings);
+    if (!settings) return;
+
+    storageUtils.saveSettings(settings);
+
+    switch (settings.scheme) {
+      case AMOLED:
+        setColors(colorsAmoled);
+        break;
+      case DARK:
+        setColors(colorsDark);
+        break;
+      case LIGHT:
+        setColors(colorsLight);
+        break;
+      default:
+        if (colorScheme === DARK) setColors(colorsDark);
+        else setColors(colorsLight);
     }
   }, [settings]);
 
   useEffect(() => {
-    if (colorScheme === 'dark') setColors(colorsDark);
-    else setColors(colorsLight);
+    if (!settings) return;
+    if (settings.scheme === DEFAULT) {
+      if (colorScheme === 'dark') setColors(colorsDark);
+      else setColors(colorsLight);
+    }
   }, [colorScheme]);
 
   return (
-    <SettingsContext.Provider value={{ settings, colors }}>
+    <SettingsContext.Provider value={{ settings, colors, updateScheme }}>
       <CountriesContext.Provider
         value={{
           countries,

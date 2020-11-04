@@ -19,7 +19,7 @@ const AboutScreen = () => {
         </PoppinsText>
       </View>
       <View style={styles.settingTitle}>
-        <PoppinsText primary fontSize={ds.fontSize[2]}>
+        <PoppinsText primary italic fontSize={ds.fontSize[2]}>
           Color Scheme
         </PoppinsText>
       </View>

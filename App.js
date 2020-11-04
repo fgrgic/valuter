@@ -4,7 +4,6 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { AppearanceProvider } from 'react-native-appearance';
 import DefaultContainer from './DefaultContainer';
 import Routes from './src/Routes';
@@ -82,14 +81,5 @@ function handleLoadingError(error) {
 function handleFinishLoading(resourcesLoaded) {
   resourcesLoaded(true);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;

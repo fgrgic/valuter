@@ -167,6 +167,7 @@ const PinnedCountries = () => {
             onChangeText={(input) => {
               updateCurrencies(item.currency, input);
             }}
+            placeholderTextColor={colors.primary20}
             placeholder={JSON.stringify(currentValues[index][item.currency])}
             value={
               currentValues[index][item.currency] > 0
@@ -194,6 +195,11 @@ const PinnedCountries = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
       >
+        <View style={styles.screenTitle}>
+          <PoppinsText primary bold fontSize={ds.fontSize[4]}>
+            Your Pins
+          </PoppinsText>
+        </View>
         {countries.map((country, index) => {
           return renderItem(
             {
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     alignItems: 'center',
-    paddingVertical: ds.padding[6],
+    paddingBottom: ds.padding[6],
   },
   item: {
     flexDirection: 'row',
@@ -285,6 +291,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
+  },
+  screenTitle: {
+    width: '90%',
+    paddingTop: ds.padding[5],
   },
 });
 

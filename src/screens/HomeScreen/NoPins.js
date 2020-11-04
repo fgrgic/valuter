@@ -21,7 +21,7 @@ const NoPins = () => {
           No Pins
         </PoppinsText>
         <PoppinsText italic primary fontSize={ds.fontSize[0]}>
-          Try searching for Countries you're interested in and pinning them
+          Try searching for countries you're interested in and pinning them
         </PoppinsText>
       </View>
     </View>

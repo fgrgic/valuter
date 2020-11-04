@@ -60,14 +60,14 @@ const HomeScreen = () => {
             {
               borderBottomColor: searchBarFocus
                 ? colors.primary
-                : colors.primary20,
+                : colors.primary30,
               color: colors.primary,
             },
           ]}
           clearButtonMode="always"
           placeholder="Search"
           placeholderTextColor={
-            searchBarFocus ? colors.primary30 : colors.primary20
+            searchBarFocus ? colors.primary50 : colors.primary30
           }
           inputRef={inputRef}
           minLength={1}

@@ -3,10 +3,13 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import React, { useState } from 'react';
 import { AppearanceProvider } from 'react-native-appearance';
 import DefaultContainer from './DefaultContainer';
 import Routes from './src/Routes';
+
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [resourcesLoaded, setResourcesLoaded] = useState(false);
@@ -80,6 +83,7 @@ function handleLoadingError(error) {
 }
 function handleFinishLoading(resourcesLoaded) {
   resourcesLoaded(true);
+  SplashScreen.hideAsync();
 }
 
 export default App;

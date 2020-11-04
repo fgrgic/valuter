@@ -109,7 +109,6 @@ const PinnedCountries = () => {
     newValues = newValues.map((newValue, index) => {
       if (index === changeIndex) return;
       const currencyRate = rates[Object.keys(newValue)[0]];
-      const num = valueInEuros * currencyRate;
       return {
         [Object.keys(newValue)[0]]: parseFloat(value)
           ? (valueInEuros * currencyRate).toFixed(2)
@@ -189,7 +188,6 @@ const PinnedCountries = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         flexGrow: 1,
-        // height: '100%',
       }}
       behavior={Platform.OS === 'android' ? 'height' : 'padding'}
       enabled
@@ -292,7 +290,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: ds.padding[3],
     fontSize: ds.fontSize[3],
-    fontFamily: 'poppins-extra-bold',
+    fontFamily: Platform.OS === 'ios' ? 'poppins-extra-bold' : '',
     textAlign: 'right',
   },
   clearAllButton: {

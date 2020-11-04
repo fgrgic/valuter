@@ -13,7 +13,16 @@ const SchemeOption = ({ selected, name, color, scheme }) => {
       onPress={() => updateScheme(scheme)}
     >
       <View style={styles.optionContainer}>
-        <View style={[styles.colorSchemeIcon, { backgroundColor: color }]} />
+        <View
+          style={[
+            styles.colorSchemeIcon,
+            {
+              backgroundColor: color,
+              borderWidth: 2,
+              borderColor: selected ? ds.accent : 'transparent',
+            },
+          ]}
+        />
         <PoppinsText primary fontSize={ds.fontSize[1]}>
           {name}
         </PoppinsText>

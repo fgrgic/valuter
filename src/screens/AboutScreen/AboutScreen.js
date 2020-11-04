@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { useColorScheme } from 'react-native-appearance';
 import { SettingsContext } from '../../../DefaultContainer';
 import { PoppinsText } from '../../components/TextComponents/PoppinsText';
 import { AMOLED, DARK, DEFAULT, LIGHT } from '../../constants';
@@ -8,6 +9,7 @@ import SchemeOption from './SchemeOption';
 
 const AboutScreen = () => {
   const { colors, settings } = useContext(SettingsContext);
+  const colorScheme = useColorScheme();
 
   return (
     <SafeAreaView
@@ -25,7 +27,7 @@ const AboutScreen = () => {
       </View>
       <View style={styles.optionsContainer}>
         {[
-          { scheme: LIGHT, displayColor: ds.almostWhite, name: 'Light' },
+          { scheme: LIGHT, displayColor: ds.white, name: 'Light' },
           { scheme: DARK, displayColor: ds.primary, name: 'Dark' },
           {
             scheme: AMOLED,
@@ -34,7 +36,7 @@ const AboutScreen = () => {
           },
           {
             scheme: DEFAULT,
-            displayColor: colors.white,
+            displayColor: colorScheme === DARK ? ds.primary : ds.white,
             name: 'System default',
           },
         ].map((option) => {
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
   },
   settingTitle: {
     width: '90%',
-    paddingVertical: ds.padding[3],
+    paddingBottom: ds.padding[3],
   },
   optionsContainer: {
     display: 'flex',

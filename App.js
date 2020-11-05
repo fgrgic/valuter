@@ -1,4 +1,3 @@
-// import { StatusBar } from 'expo-status-bar';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
@@ -70,12 +69,6 @@ async function loadResourcesAsync() {
   ]);
 
   await Promise.all(fontAssets);
-
-  // const imageAssets = cacheImages([
-  //   require('./assets/icons/marker/marker.png'),
-  // ]);
-
-  // await Promise.all(imageAssets);
 }
 
 function handleLoadingError(error) {

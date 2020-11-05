@@ -5,6 +5,7 @@ import { AMOLED, DARK, DEFAULT, LIGHT } from './src/constants';
 import * as colorsLight from './src/constants/colors';
 import * as colorsAmoled from './src/constants/colors-amoled';
 import * as colorsDark from './src/constants/colors-dark';
+import fallbackRates from './src/constants/fallback-rates';
 import { FIXER_ACCESS } from './src/keys';
 import * as storageUtils from './src/utils/Storage';
 
@@ -46,6 +47,7 @@ const DefaultContainer = (props) => {
       storageUtils.saveRates(response.data.rates);
     } catch (e) {
       console.log("Couldn't fetch new rates, using old ones instead");
+      initializeRates();
       setRates(storageUtils.loadRates());
     }
   };
@@ -63,17 +65,12 @@ const DefaultContainer = (props) => {
     setCountries([]);
   };
 
-  /**
-   * TESTING PURPOSES ONLY!!!
-   * TODO: REMOVE BEFORE FINAL DEPLOYMENT
-   * reason -- don't ping fixerr servers too much (only 1000 available per month)
-   */
   const initializeRates = async () => {
     const storageRates = await storageUtils.loadRates();
     if (storageRates) {
       setRates(storageRates);
     } else {
-      updateRates();
+      setRates(fallbackRates.rates);
     }
   };
 
@@ -137,8 +134,7 @@ const DefaultContainer = (props) => {
 
   useEffect(() => {
     initializePins();
-    // updateRates();
-    initializeRates();
+    updateRates();
     initializeSettings();
   }, []);
 

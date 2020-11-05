@@ -104,11 +104,16 @@ In this folder I defined all the constants (obviously) which includes default st
 
 To sum up, there are many more ways I could have improved the cleanliness of the code, but I believe that the structure of the project is scalable and as modular as possible.
 
-## Devices support
+## Devices supported
 
 I tried the application on:
 
 - iPhone 8 (iOS 14.1)
 - iPad Pro 11 2020 (iPadOS 14.2)
 - OnePlus 5T (Android 9)
-- Web
+- Web (Chrome and Safari)
+- iPhone 12 Pro and Pro Max on Simulator
+
+I primarily developed on iPhone/iPad (iOS). I then fixed all the issues on Android and most of the issues on web - pinned countries are not responsive for some reason :(
+
+You should be able to test it out on any iPhone and hopefully Android phone

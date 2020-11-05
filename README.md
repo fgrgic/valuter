@@ -58,6 +58,7 @@ I spent around 12 hours on the application in total. I wanted to make it as clos
 - Ability to reorder pinned currencies (spent so much time on this one, but had to give up at some point)
 - Run a small server that would call fixerr api every hour so not to do unnecessary calls (if the app would, for example, be deployed on App Store) and then request exchange rates from that server.
 - Do the whole thing using TypeScript (didn't do it as writing js allows me to quickly write more)
+- I am not satisfied with the third party implementation of the Panel that pops up for country information.
 
 ## Run locally
 
@@ -101,3 +102,12 @@ In this folder I defined all the constants (obviously) which includes default st
 ---
 
 To sum up, there are many more ways I could have improved the cleanliness of the code, but I believe that the structure of the project is scalable and as modular as possible.
+
+## Devices support
+
+I tried the application on:
+
+- iPhone 8 (iOS 14.1)
+- iPad Pro 11 2020 (iPadOS 14.2)
+- OnePlus 5T (Android 9)
+- Web

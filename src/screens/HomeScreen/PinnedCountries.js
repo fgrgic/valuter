@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   Alert,
+  Dimensions,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -61,8 +62,12 @@ const PinnedCountries = () => {
     });
   }, [colors]);
 
-  const clearAllAlert = () =>
-    Alert.alert(
+  const clearAllAlert = () => {
+    if (Platform.OS === 'web') {
+      clearAllPins();
+      return;
+    }
+    return Alert.alert(
       'Clear all pins?',
       '',
       [
@@ -80,6 +85,7 @@ const PinnedCountries = () => {
       ],
       { cancelable: false }
     );
+  };
 
   const openPanel = () => {
     setIsPanelActive(true);
@@ -201,7 +207,13 @@ const PinnedCountries = () => {
         }}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={[
+          {
+            width:
+              Platform.OS === 'web' ? Dimensions.get('window').width : '100%',
+          },
+          styles.container,
+        ]}
       >
         <View style={styles.screenTitle}>
           <PoppinsText primary bold fontSize={ds.fontSize[4]}>
@@ -257,7 +269,7 @@ const PinnedCountries = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    display: 'flex',
     alignItems: 'center',
     paddingBottom: ds.padding[6],
   },
@@ -290,7 +302,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: ds.padding[3],
     fontSize: ds.fontSize[3],
-    fontFamily: Platform.OS === 'ios' ? 'poppins-extra-bold' : '',
+    fontFamily: Platform.OS === 'android' ? '' : 'poppins-extra-bold',
     textAlign: 'right',
   },
   clearAllButton: {

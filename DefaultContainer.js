@@ -5,7 +5,7 @@ import { AMOLED, DARK, DEFAULT, LIGHT } from './src/constants';
 import * as colorsLight from './src/constants/colors';
 import * as colorsAmoled from './src/constants/colors-amoled';
 import * as colorsDark from './src/constants/colors-dark';
-import fallbackRates from './src/constants/fallback-rates';
+import fallbackRates from './src/constants/fallbackRates';
 import { FIXER_ACCESS } from './src/keys';
 import * as storageUtils from './src/utils/Storage';
 

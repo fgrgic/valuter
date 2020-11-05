@@ -1,4 +1,4 @@
-export default fallbackRates = {
+export default {
   success: true,
   timestamp: 1604566985,
   base: 'EUR',

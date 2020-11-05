@@ -163,7 +163,14 @@ const PinnedCountries = () => {
           <TextInput
             style={[
               styles.currencyInput,
-              { color: colors.primary, backgroundColor: colors.white },
+              {
+                color: colors.primary,
+                backgroundColor: colors.white,
+                width:
+                  Platform.OS === 'web'
+                    ? Dimensions.get('window').width * 0.4
+                    : '100%',
+              },
             ]}
             includeFontPadding={false}
             carretHidden
@@ -282,8 +289,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   countryInfoContainer: {
-    flexShrink: 1,
-    flexGrow: 1,
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
   },
@@ -297,6 +303,7 @@ const styles = StyleSheet.create({
   },
   currencyInput: {
     flexGrow: 1,
+    flexShrink: 1,
     color: ds.primary,
     backgroundColor: ds.white,
     borderRadius: 10,

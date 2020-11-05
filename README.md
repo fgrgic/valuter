@@ -69,3 +69,35 @@ Due to fixerr limiting to 1000 requests per month for a free version, I didn't p
   export const FIXER_ACCESS = 'your-access-token';
   ```
 - Run app normally
+
+## Project Structure and Implementation Details
+
+I used the project structure that proved to work the best from my experience. First of all -- no classes! I love the _new_ hooks as it allows me to write code way faster than the _traditional_ classes
+
+In the root of the project are `App.js` (the root app file) and `DefaultContainer.js` which is a container for the whole app. I believe that this whole app could be done without it as it is not as complex, but using it helps with future proofing, and allows for cleaner code.
+
+In the `src` folder I divided files into `screens`, `components`, `hooks`, `keys`, and `constants`.
+
+### `components`
+
+Here are all the components that are 'shared', meaning that any app screen would probably use them.
+
+### `screens`
+
+Obviously, here are screens. Also, here i put the components that are specific to those screens and are not used by any other. I realized that if all the componenents are put into a `components` folder it soon gets messy when the project begins scaling. Therefore, it is easier (in my opinion) to have this distinction between 'shared' components and those available only to certain screens.
+
+### `hooks`
+
+Similarly to `components`, here are all the custom hooks that can be shared between components. There is only one at the moment, but the folder soon saturates with custom hooks when scaling.
+
+### `keys`
+
+All the api keys and tokens used by the app that should never be pushed to git.
+
+### `constants`
+
+In this folder I defined all the constants (obviously) which includes default styles and color scheme files. Also, if i18n would be implemented, strings would go in this folder.
+
+---
+
+To sum up, there are many more ways I could have improved the cleanliness of the code, but I believe that the structure of the project is scalable and as modular as possible.
